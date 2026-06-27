@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 using System.Text;
 
 namespace DSA___Problem_Solving
@@ -23,6 +24,8 @@ namespace DSA___Problem_Solving
         /// Returns true if s2 contains a permutation of s1.
         /// CONSTRAINT: Use a DAT (int[26]). Do NOT use a Dictionary. Time must be O(N).
         /// </summary>
+        /// 
+        /*
         public bool CheckInclusion(string s1, string s2)
         {
             // Edge case: if the target permutation is longer than the string itself
@@ -49,7 +52,7 @@ namespace DSA___Problem_Solving
 
                 // Decrement at[right] and increment at[left]->slide
                 DAT[s2[right] - adjustment] += 1;
-                DAT[s2[left] - adjustment] = right >= sub_len ? DAT[s2[left] - adjustment] -1 : DAT[s2[left] - adjustment];
+                DAT[s2[left] - adjustment]   = right >= sub_len ? DAT[s2[left] - adjustment] -1 : DAT[s2[left] - adjustment];
 
 
                 //Window maintains len(s1) + guarantees all sub_letters included
@@ -71,6 +74,64 @@ namespace DSA___Problem_Solving
 
             return false;
         }
+
+
+
+        */
+
+
+
+        //Retyping from memory
+        private bool CheckInclusion(string s1, string s2) {
+
+            int left = 0;
+            int right = 0;
+
+            int[] DAT = new int[26];
+
+            int adjustment = 'a';
+
+            int win_len = s1.Length;
+
+            bool valid = true;
+            //Edge case, substring cannot have len > test string.
+            if (s1.Length > s2.Length) return false;
+            
+            //Build DAT for initial string
+            for(int i = 0; i<s1.Length; i++)
+            {
+                DAT[s1[i] - adjustment] -= 1;
+            }
+
+            for (right = 0; right < s2.Length; right++)
+            {
+                //Now populate DAT with window length strings ;)
+                //Adding one and then shifting window once fully formed.
+
+                valid = true;
+
+                DAT[s2[right] - adjustment] += 1;
+                
+                if(right >= win_len)
+                {
+                    DAT[s2[left] - adjustment] -= 1;
+                    left ++;
+                }
+                      
+                foreach(int val in DAT)
+                {
+                    if(val != 0)
+                    {
+                        valid = false;
+                        break;
+                    }
+                }
+                if (valid) return true;
+            }
+
+            return false;
+        }
+
 
         private void RunTest(string s1, string s2, bool expected)
         {
