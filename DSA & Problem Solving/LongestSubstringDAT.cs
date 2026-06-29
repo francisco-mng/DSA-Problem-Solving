@@ -23,13 +23,6 @@ public class LongestSubstringDAT
     public int LengthOfLongestSubstring(string s)
     {
         // YOUR CODE HERE
-        // 1. Setup your left pointer, right pointer, and max length.
-        // 2. Setup your Ledger: bool[] seen = new bool[256];
-        // 3. Slide the window:
-        //    - If s[right] is ALREADY in the ledger (seen == true):
-        //         The Bouncer kicks out s[left], marks it false in the ledger, and left++.
-        //    - Add s[right] to the ledger.
-        //    - Update max length (right - left + 1).
 
         return 0;
     }
