@@ -86,9 +86,7 @@ namespace DSA___Problem_Solving
 
             int left = 0;
             int right = 0;
-
             int[] DAT = new int[26];
-
             int adjustment = 'a';
 
             int win_len = s1.Length;
@@ -107,9 +105,7 @@ namespace DSA___Problem_Solving
             {
                 //Now populate DAT with window length strings ;)
                 //Adding one and then shifting window once fully formed.
-
                 valid = true;
-
                 DAT[s2[right] - adjustment] += 1;
                 
                 if(right >= win_len)

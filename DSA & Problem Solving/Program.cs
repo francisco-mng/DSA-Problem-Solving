@@ -205,14 +205,5 @@ using System.Security;
 //var s = new Anagrams__1();
 
 
-var s = new String_Permutations();
+var s = new FrequencyDrill();
 s.run();
-
-
-//int[] i = new int[3];
-//i[0] -= 1;
-
-//int[] t = new int[3];
-//i[0] -= 1;
-
-//Console.WriteLine(i == t);
