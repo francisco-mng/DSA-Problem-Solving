@@ -23,8 +23,40 @@ public class LongestSubstringDAT
     public int LengthOfLongestSubstring(string s)
     {
         // YOUR CODE HERE
+        //Assuming we're working with ASCI-Extended(256)
+        int[] DAT = new int[256];
 
-        return 0;
+        int left = 0;
+        int right;
+
+        int max = 0;
+        int curr_len = 0;
+
+        //Sliding window
+        for(right = 0; right < s.Length; right++)
+        {
+
+            DAT[s[right]] += 1;
+
+            if (DAT[s[right]] <= 1)
+            {
+                curr_len = right - left + 1;
+                max = curr_len > max ? curr_len : max;
+            }
+            else
+            {
+                //Current right index char greater than 1 -> slide
+                //As well as while left < right
+                while (left < right && DAT[s[right]] > 1)
+                {
+                    DAT[s[left]] -= 1;
+                    left++;
+                }
+            }
+
+        }
+
+        return max;
     }
 
     private void RunTest(string input, int expected)

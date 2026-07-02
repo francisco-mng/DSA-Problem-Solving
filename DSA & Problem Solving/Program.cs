@@ -205,5 +205,11 @@ using System.Security;
 //var s = new Anagrams__1();
 
 
-var s = new FrequencyDrill();
-s.run();
+var s = new Next_Lexicographical_Permutation_of_Array();
+s.Run();
+
+
+int[] n = new int[1];
+int[] p = n; n[0] = 1;
+
+Console.Write($"Reference types : n[0] : {n[0]} p[0]: {p[0]}");
