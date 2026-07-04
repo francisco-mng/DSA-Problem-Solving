@@ -205,11 +205,21 @@ using System.Security;
 //var s = new Anagrams__1();
 
 
-var s = new Next_Lexicographical_Permutation_of_Array();
-s.Run();
+//var s = new Next_Lexicographical_Permutation_of_Array();
+//s.Run();
 
 
-int[] n = new int[1];
-int[] p = n; n[0] = 1;
+//int[] n = new int[1];
+//int[] p = n; n[0] = 1;
 
-Console.Write($"Reference types : n[0] : {n[0]} p[0]: {p[0]}");
+//Console.Write($"Reference types : n[0] : {n[0]} p[0]: {p[0]}");
+
+
+////var drill = new AuctionBiddingDrill();
+//await drill.Run();
+
+
+//var s = new Character_Replacement_Drill_19();
+//s.Run();
+
+LongestSubstringWithAtMost_K_Unique_characters.Run();
