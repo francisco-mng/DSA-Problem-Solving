@@ -189,6 +189,7 @@
 
 
 using DSA___Problem_Solving;
+using DSA___Problem_Solving.Stacks___Queues;
 using System.Net.Http.Headers;
 using System.Security;
 
@@ -224,4 +225,13 @@ using System.Security;
 
 //LongestSubstringWithAtMost_K_Unique_characters.Run();
 
-Valid_Parenthesis.Main();
+//Valid_Parenthesis.Main();
+
+
+//Min_Stack_tester.Main();
+
+//Queue_Stacks_Tester.Main();
+
+//Stack_Using_Queue.Main();
+
+CircularQueue.Main();
