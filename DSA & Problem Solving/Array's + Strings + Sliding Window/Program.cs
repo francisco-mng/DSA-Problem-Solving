@@ -189,6 +189,7 @@
 
 
 using DSA___Problem_Solving;
+using DSA___Problem_Solving.Building_up_to_staircase;
 using DSA___Problem_Solving.Stacks___Queues;
 using System.Net.Http.Headers;
 using System.Security;
@@ -234,4 +235,15 @@ using System.Security;
 
 //Stack_Using_Queue.Main();
 
-CircularQueue.Main();
+//CircularQueue.Main();
+
+
+//BinarySearch_Tester.Main();
+
+//Binary2D_Matrix.Main();
+//Console.WriteLine(Math.Round(Math.Log(13)));
+
+//Kth2D.Main();
+
+//Two_Sum.Main();
+BinarySearchTester.Main();
