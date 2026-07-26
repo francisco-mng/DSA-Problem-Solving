@@ -13,7 +13,7 @@ namespace DSA___Problem_Solving.Building_up_to_staircase
         {
            
 
-            if (arr.Length == 0 || arr[i].Length == 0) return (-1, -1);
+            if (arr.Length == 0 || arr[0].Length == 0) return false;
 
             int rows = arr.Length;
             int cols = arr[0].Length;
