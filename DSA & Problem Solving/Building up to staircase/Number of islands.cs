@@ -91,22 +91,31 @@ public class ArchipelagoTester
 
                     if (grid[r][c] == '1')
                     {
-                        MarkRegion(r, c, grid, region, currCount);
+                        //Start current count at 1
+                        //currCount = currCount == 0 ? 1 : currCount;
+                        MarkRegion(ref r, ref  c, ref grid, ref region, ref currCount);
                     }
                 }
             }
 
-            return 0;
+            return currCount;
         }
 
 
-        private void MarkRegion(int r, int c, char[][] grid, int[][] region, int currCount)
+        private void MarkRegion(ref int r, ref int c, ref char[][] grid, ref int[][] region, ref int currCount)
         {
             //Some condition to tell whether
             //or not the current 1 is marked
             //and is related with the other
             //elements in the region...
 
+            if (region[r][c] == 0)
+            {
+                //Not marked ;)
+                //Check for any neighbors && take that value of the neighbors if found
+                int res = findNeighborRegion(region, r, c);
+                currCount = res != -1 ? res : currCount + 1;
+            }
 
             //self
             region[r][c] = currCount;
@@ -117,14 +126,62 @@ public class ArchipelagoTester
 
             //right
             if(c < region[0].Length - 1) 
-                region[r][c + 1] = grid[r][c + 1] == '1'? currCount : grid[r][c + 1];
+                region[r][c + 1] = grid[r][c + 1] == '1'? currCount : region[r][c + 1];
 
             //up
             if (r > 0) 
-                region[r - 1][c] = grid[r - 1][c] == '1' ? currCount : grid[r - 1][c];
+                region[r - 1][c] = grid[r - 1][c] == '1' ? currCount : region[r - 1][c];
 
             //down
-            if (r < region.Length - 1) region[r + 1][c] = region[r+1][c] == '1' ? currCount : region[r + 1][c];
+            if (r < region.Length - 1) region[r + 1][c] = grid[r+1][c] == '1' ? currCount : region[r + 1][c];
+        }
+
+        int findNeighborRegion(int[][] region, int r, int c)
+        {
+            int val;
+            //Up
+            if (r > 0)
+            {
+                if(region[r-1][c] != 0)
+                {
+                    val = region[r-1][c];
+                    return val;
+                }
+            }
+
+            //Down
+            if(r < region.Length -1)
+            {
+                if (region[r + 1][c] != 0)
+                {
+                    val = region[r + 1][c];
+                    return val;
+                }
+            }
+
+
+            //Left
+            if(c > 0)
+            {
+                if (region[r][c-1] != 0)
+                {
+                    val = region[r][c - 1];
+                    return val;
+                }
+            }
+
+
+            //Right
+            if(c < region[0].Length -1)
+            {
+                if (region[r][c+1] != 0)
+                {
+                    val = region[r - 1][c + 1];
+                    return val;
+                }
+            }
+            val = -1;
+            return val;
         }
     }
 }
