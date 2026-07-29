@@ -5,7 +5,7 @@ using System.Text;
 namespace DSA___Problem_Solving.Building_up_to_staircase
 {
 
-public class ArchipelagoTester
+    public class ArchipelagoTester
     {
         public static void Main()
         {
@@ -48,7 +48,7 @@ public class ArchipelagoTester
 
         public static void RunTest(string testName, char[][] grid, int expected)
         {
-            Solution sol = new Solution();
+            Solution2 sol = new Solution2();
             int result = sol.NumIslands(grid);
 
             if (result == expected)
@@ -65,6 +65,12 @@ public class ArchipelagoTester
         }
     }
 
+
+    /// <summary>
+    /// PROBLEM WITH CURRENT IMPLEMENTATION -> Shortsighted lookahead algorithm.
+    /// /                                   -> Opt in to do DFS to find all the neighbors recursively...
+    ///                                     -> So for every cell that is a '1', recursively find all the other 1's
+    /// </summary>
     public class Solution
     {
         public int NumIslands(char[][] grid)
@@ -72,20 +78,21 @@ public class ArchipelagoTester
             // The Forge is yours. 
             // Remember: You have to keep track of the land you've already explored.
             int[][] region = new int[grid.Length][];
-            for(int i = 0; i < region.Length; i++)
+            for (int i = 0; i < region.Length; i++)
             {
                 region[i] = new int[grid[i].Length];
             }
 
             //Now we have a grid we can mark and label ;)
 
-            int r,      c;
-                r = 0;  c = 0;
+            int r, c;
+            r = 0; c = 0;
 
             int currCount = 0;
 
-            for (r = 0; r < grid.Length; r++) { 
-                for(c = 0; c < grid[r].Length; c++)
+            for (r = 0; r < grid.Length; r++)
+            {
+                for (c = 0; c < grid[r].Length; c++)
                 {
                     //Mark surrounding region if val == '1'
 
@@ -93,7 +100,7 @@ public class ArchipelagoTester
                     {
                         //Start current count at 1
                         //currCount = currCount == 0 ? 1 : currCount;
-                        MarkRegion(ref r, ref  c, ref grid, ref region, ref currCount);
+                        MarkRegion(r, c, grid, region, ref currCount);
                     }
                 }
             }
@@ -102,7 +109,7 @@ public class ArchipelagoTester
         }
 
 
-        private void MarkRegion(ref int r, ref int c, ref char[][] grid, ref int[][] region, ref int currCount)
+        private void MarkRegion(int r, int c, char[][] grid, int[][] region, ref int currCount)
         {
             //Some condition to tell whether
             //or not the current 1 is marked
@@ -121,19 +128,19 @@ public class ArchipelagoTester
             region[r][c] = currCount;
 
             //left 
-            if (c > 0) 
-                region[r][c - 1] = grid[r][c - 1] == '1'? currCount : region[r][c - 1];
+            if (c > 0)
+                region[r][c - 1] = grid[r][c - 1] == '1' ? currCount : region[r][c - 1];
 
             //right
-            if(c < region[0].Length - 1) 
-                region[r][c + 1] = grid[r][c + 1] == '1'? currCount : region[r][c + 1];
+            if (c < region[0].Length - 1)
+                region[r][c + 1] = grid[r][c + 1] == '1' ? currCount : region[r][c + 1];
 
             //up
-            if (r > 0) 
+            if (r > 0)
                 region[r - 1][c] = grid[r - 1][c] == '1' ? currCount : region[r - 1][c];
 
             //down
-            if (r < region.Length - 1) region[r + 1][c] = grid[r+1][c] == '1' ? currCount : region[r + 1][c];
+            if (r < region.Length - 1) region[r + 1][c] = grid[r + 1][c] == '1' ? currCount : region[r + 1][c];
         }
 
         int findNeighborRegion(int[][] region, int r, int c)
@@ -142,15 +149,15 @@ public class ArchipelagoTester
             //Up
             if (r > 0)
             {
-                if(region[r-1][c] != 0)
+                if (region[r - 1][c] != 0)
                 {
-                    val = region[r-1][c];
+                    val = region[r - 1][c];
                     return val;
                 }
             }
 
             //Down
-            if(r < region.Length -1)
+            if (r < region.Length - 1)
             {
                 if (region[r + 1][c] != 0)
                 {
@@ -161,9 +168,9 @@ public class ArchipelagoTester
 
 
             //Left
-            if(c > 0)
+            if (c > 0)
             {
-                if (region[r][c-1] != 0)
+                if (region[r][c - 1] != 0)
                 {
                     val = region[r][c - 1];
                     return val;
@@ -172,9 +179,9 @@ public class ArchipelagoTester
 
 
             //Right
-            if(c < region[0].Length -1)
+            if (c < region[0].Length - 1)
             {
-                if (region[r][c+1] != 0)
+                if (region[r][c + 1] != 0)
                 {
                     val = region[r - 1][c + 1];
                     return val;
@@ -184,4 +191,54 @@ public class ArchipelagoTester
             return val;
         }
     }
+
+
+    public class Solution2
+    {
+        public int NumIslands(char[][] grid)
+        {
+            // Safety check for empty grids
+            if (grid == null || grid.Length == 0) return 0;
+
+            int numIslands = 0;
+
+            // Sweep the entire grid
+            for (int r = 0; r < grid.Length; r++)
+            {
+                for (int c = 0; c < grid[r].Length; c++)
+                {
+                    // When we find an unvisited piece of land
+                    if (grid[r][c] == '1')
+                    {
+                        numIslands++; // Count this new island
+                        SinkIsland(grid, r, c); // Trigger DFS to clear the whole island
+                    }
+                }
+            }
+
+            return numIslands;
+        }
+
+        private void SinkIsland(char[][] grid, int r, int c)
+        {
+            // 1. BASE CASES: When to stop recursion
+            // If we step out of bounds OR if we hit water ('0'), stop.
+            if (r < 0 || r >= grid.Length ||
+                c < 0 || c >= grid[0].Length ||
+                grid[r][c] == '0')
+            {
+                return;
+            }
+
+            // 2. ACTION: Mark this land as visited by turning it into water
+            grid[r][c] = '0';
+
+            // 3. RECURSION: Check all 4 adjacent directions
+            SinkIsland(grid, r + 1, c); // Down
+            SinkIsland(grid, r - 1, c); // Up
+            SinkIsland(grid, r, c + 1); // Right
+            SinkIsland(grid, r, c - 1); // Left
+        }
+    }
+
 }
