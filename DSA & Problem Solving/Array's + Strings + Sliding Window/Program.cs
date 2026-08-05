@@ -254,4 +254,8 @@ using System.Security;
 
 //ReversedLinkedLists.Main(args);
 
-Merge2SortedLists.Main(args); 
+//Merge2SortedLists.Main(args); 
+
+//RemoveElementsTester.Main();
+
+LinkedListTester.Main();
