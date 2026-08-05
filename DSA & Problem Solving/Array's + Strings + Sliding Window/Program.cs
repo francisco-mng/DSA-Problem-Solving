@@ -258,4 +258,10 @@ using System.Security;
 
 //RemoveElementsTester.Main();
 
-LinkedListTester.Main();
+//LinkedListTester.Main();
+
+DetectingCycleTester.Main();
+
+
+
+
