@@ -87,6 +87,7 @@ public class SolutionCycles
 
         while(fast != null)
         {
+            //Mathematical observation : 1x move for slow pointer && 2x for the fast pointer ->Eventually they'll overlap
             fast = fast.next;
             fast = fast?.next;
             slow = slow?.next;
