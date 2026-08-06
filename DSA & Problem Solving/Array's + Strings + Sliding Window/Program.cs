@@ -262,7 +262,14 @@ using System.Security;
 
 //DetectingCycleTester.Main();
 
-TesterReOrderList.Main();
+//TesterReOrderList.Main();
+
+//TesterRotation.Main();
+
+
+//TesterMaxDepth.Main();
+
+TesterInvertBinaryTree.Main();
 
 
 

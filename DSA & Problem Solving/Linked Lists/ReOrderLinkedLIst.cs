@@ -55,6 +55,54 @@ public class SolutionReorderList
 
         }                                                                       //Looping ends here
     }
+
+    //More optimal solution : Split_middle -> Reverse -> Join O(n) time complexity
+    public void ReorderListSplitReverseJoin(ListNode head)
+    {
+        if (head == null || head.next == null) return;
+
+        // Phase 1: Find the middle using Fast & Slow (Tortoise & Hare)
+        ListNode slow = head;
+        ListNode fast = head.next;
+        while (fast != null && fast.next != null)
+        {
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        // Sever the list into two halves
+        ListNode secondHalf = slow.next;
+        slow.next = null; // Break the connection
+
+        // Phase 2: Reverse the second half (Day 1 muscle memory)
+        ListNode prev = null;
+        ListNode curr = secondHalf;
+        while (curr != null)
+        {
+            ListNode tmp = curr.next;
+            curr.next = prev;
+            prev = curr;
+            curr = tmp;
+        }
+
+        // Phase 3: Interleave Merge (Zipper)
+        ListNode first = head;
+        ListNode second = prev; // 'prev' is the new head of the reversed half
+        while (second != null)
+        {
+            // Cache the next nodes
+            ListNode tmp1 = first.next;
+            ListNode tmp2 = second.next;
+
+            // Zip them together
+            first.next = second;
+            second.next = tmp1;
+
+            // Move the pointers forward
+            first = tmp1;
+            second = tmp2;
+        }
+    }
 }
 
 public class TesterReOrderList
