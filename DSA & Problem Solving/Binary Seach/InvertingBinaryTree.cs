@@ -2,7 +2,6 @@
 public class SolutionInvertBinaryTree
 {
 
-    TreeNode? tmpL = null;
 
 
     public TreeNode? InvertTree(TreeNode? node)
@@ -17,6 +16,7 @@ public class SolutionInvertBinaryTree
         if (node == null) return;
 
 
+        TreeNode? tmpL = null;
         tmpL = node.left;
         node.left = node.right;
         node.right = tmpL;
