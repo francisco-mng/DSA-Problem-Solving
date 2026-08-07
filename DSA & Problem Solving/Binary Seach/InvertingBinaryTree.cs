@@ -15,7 +15,6 @@ public class SolutionInvertBinaryTree
         //Base case -> Exit for recursive function.s
         if (node == null) return;
 
-
         TreeNode? tmpL = null;
         tmpL = node.left;
         node.left = node.right;
